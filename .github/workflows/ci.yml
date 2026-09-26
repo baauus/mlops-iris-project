@@ -9,7 +9,7 @@ on:
    - main
 
 jobs:
- test:
+ Test:
   runs-on: ubuntu-latest
 
   steps:
@@ -30,4 +30,4 @@ jobs:
 
    - name: Run tests
      run: |
-      pytest
+      python -m pytest
