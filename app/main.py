@@ -1,12 +1,14 @@
-from pathlib import Path
-
+import os
+import mlflow
 import mlflow.sklearn
 from mlflow import MlflowClient
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+
 
 client = MlflowClient()
 
-from fastapi import FastAPI
-from pydantic import BaseModel
 
 model = mlflow.sklearn.load_model(
     "models:/IrisClassifier@champion"
@@ -20,6 +22,13 @@ model_version = client.get_model_version_by_alias(
 app = FastAPI(
     title="Iris ML API",
     version="1.0"
+)
+
+mlflow.set_tracking_uri(
+    os.getenv(
+        "MLFLOW_TRACKING_URI",
+        "http://localhost:5000"
+    )
 )
 
 class IrisInput(BaseModel):
