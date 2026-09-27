@@ -18,6 +18,8 @@ mlflow.set_tracking_uri(
     )
 )
 
+mlflow.set_experiment("iris-classification-v2")
+
 def train():
     iris = load_iris()
 
