@@ -1,12 +1,20 @@
 from pathlib import Path
 
 import mlflow.sklearn
+from mlflow import MlflowClient
+
+client = MlflowClient()
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 model = mlflow.sklearn.load_model(
     "models:/IrisClassifier@champion"
+)
+
+model_version = client.get_model_version_by_alias(
+    "IrisClassifier",
+    "champion"
 )
 
 app = FastAPI(
@@ -30,6 +38,13 @@ species = [
 def health():
     return {
         "status": "ok"
+    }
+
+@app.get("/model")
+def get_model():
+    return {
+        "model_name": model_version.name,
+        "model_version": model_version.version
     }
 
 @app.post("/predict")
