@@ -1,6 +1,8 @@
 from pathlib import Path
 
 import joblib
+import mlflow
+import mlflow.sklearn
 
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
@@ -22,30 +24,45 @@ def train():
         random_state=42
     )
 
+    n_estimators=10
+    random_state=42
+    
     model = RandomForestClassifier(
-        n_estimators=100,
-        random_state=42
+        n_estimators=n_estimators,
+        random_state=random_state
     )
 
-    model.fit(x_train, y_train)
+    with mlflow.start_run():
+        
+        model.fit(x_train, y_train)
 
-    predictions = model.predict(x_test)
+        predictions = model.predict(x_test)
 
-    accuracy = accuracy_score(
-        y_test,
-        predictions
-    )
+        accuracy = accuracy_score(
+            y_test,
+            predictions
+        )
 
-    print(f"Accuracy: {accuracy:.4f}")
+        mlflow.log_param("n_estimators", n_estimators)
+        mlflow.log_param("random_state", random_state)
+        mlflow.log_param("test_size", 0.2)
+        mlflow.log_metric("accuracy", accuracy)
 
-    MODEL_PATH.parent.mkdir(
-        parents=True,
-        exist_ok=True
-    )
+        mlflow.sklearn.log_model(
+            model,
+            name="model",
+            skops_trusted_types=["sklearn.tree._tree.Tree"]
+        )
 
-    joblib.dump(model, MODEL_PATH)
+        MODEL_PATH.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
 
-    print(f"Model saved to {MODEL_PATH}")
+        joblib.dump(model, MODEL_PATH)
+
+        print(f"Training accuracy: {accuracy:.4f}")
+        print(f"Model saved to {MODEL_PATH}")
 
 
 if __name__ == "__main__":
