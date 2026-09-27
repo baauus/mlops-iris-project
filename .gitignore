@@ -1,4 +1,28 @@
+# Environment variables
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Virtual environment
 venv/
+.venv/
+
+# Python
 __pycache__/
 *.pyc
+*.py[cod]
+*$py.class
+
+# Pytest
 .pytest_cache/
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Local models
+models/
+
