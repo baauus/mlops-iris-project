@@ -33,7 +33,7 @@ def train():
         random_state=42
     )
 
-    n_estimators=10
+    n_estimators=200
     random_state=42
     
     model = RandomForestClassifier(
