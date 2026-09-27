@@ -1,13 +1,13 @@
 from pathlib import Path
 
-import joblib
+import mlflow.sklearn
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-MODEL_PATH = Path("models/model.joblib")
-
-model = joblib.load(MODEL_PATH)
+model = mlflow.sklearn.load_model(
+    "models:/IrisClassifier@champion"
+)
 
 app = FastAPI(
     title="Iris ML API",
