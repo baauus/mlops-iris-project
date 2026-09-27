@@ -51,6 +51,7 @@ def train():
         mlflow.sklearn.log_model(
             model,
             name="model",
+            registered_model_name="IrisClassifier",
             skops_trusted_types=["sklearn.tree._tree.Tree"]
         )
 

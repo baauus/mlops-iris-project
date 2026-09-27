@@ -1,0 +1,24 @@
+artifact_path: /home/baus/Dev/MLOps/mlops-iris/mlruns/0/models/m-6cfe8558a01943c989f531fe5d5a606b/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.14.4
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.1
+    skops_trusted_types:
+    - sklearn.tree._tree.Tree
+mlflow_version: 3.16.1
+model_id: m-6cfe8558a01943c989f531fe5d5a606b
+model_size_bytes: 207446
+model_uuid: m-6cfe8558a01943c989f531fe5d5a606b
+prompts: null
+run_id: 8163f922d2ef4ae39419b1e8625d0638
+utc_time_created: '2026-09-27 16:03:34.585227'
