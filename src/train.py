@@ -1,15 +1,22 @@
-from pathlib import Path
-
+import os
 import joblib
 import mlflow
 import mlflow.sklearn
 
+from pathlib import Path
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 MODEL_PATH = Path("models/model.joblib")
+
+mlflow.set_tracking_uri(
+    os.getenv(
+        "MLFLOW_TRACKING_URI",
+        "http://localhost:5000"
+    )
+)
 
 def train():
     iris = load_iris()
